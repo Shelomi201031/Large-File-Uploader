@@ -1,55 +1,55 @@
 .file-uploader {
-    max-width: 400px; /* Set a maximum width for the uploader */
-    margin: 20px auto; /* Center the uploader on the page */
-    padding: 50px; /* Add padding around the uploader */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 8px; /* Rounded corners */
+    max-width: 400px; 
+    margin: 20px auto; 
+    padding: 50px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    background-color: #f9f9f9; /* Light background color */
+    background-color: #f9f9f9; 
     text-align: center;
     font-weight: bolder;
   }
   
   .file-uploader h2 {
-    text-align: center; /* Center the title */
-    margin-bottom: 20px; /* Space below the title */
-    background: linear-gradient(to right, #007bff, #ff69b4);
+    text-align: center; 
+    margin-bottom: 20px; 
+    background: linear-gradient(to right, #007bff, purple);
     -webkit-background-clip: text; /* For Safari: use background as text color */
     -webkit-text-fill-color: transparent; /* Makes the text color transparent to show the gradient */
     font-weight: bolder;
   }
   
   .file-uploader input[type="file"] {
-    display: block; /* Make the file input a block element */
-    width: 100%; /* Full width */
-    padding: 10px; /* Padding inside the input */
-    margin-bottom: 20px; /* Space below the input */
-    border: 1px solid #007bff; /* Border color */
-    border-radius: 4px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    background-color: #f9f9f9; /* Light background color */
-    cursor: pointer; /* Pointer cursor on hover */
+    display: block; 
+    width: 100%; 
+    padding: 10px; 
+    margin-bottom: 20px; 
+    border: 1px solid #007bff; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    background-color: #f9f9f9; 
+    cursor: pointer; 
     transition: border-color 0.3s ease; /* Smooth transition for border color */
   }
 
   .file-uploader input[type="file"]:hover {
-    border-color: #0056b3; /* Change border color on hover */
+    border-color: #0056b3; 
   }
   
-  /* Customize the button for better appearance */
+  
 .file-uploader input[type="file"]::-webkit-file-upload-button {
-    background-color: #007bff; /* Blue background color */
-    color: white; /* White text color */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    padding: 10px; /* Padding inside the button */
-    font-size: 16px; /* Font size */
-    cursor: pointer; /* Pointer cursor */
+    background-color: #007bff; 
+    color: white; 
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
     transition: background-color 0.3s ease; /* Smooth transition */
   }
   
   .file-uploader input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3; 
   }
   
   .file-uploader button {
@@ -67,19 +67,18 @@
   
   
   .file-uploader button:disabled {
-    background-color: #ccc; /* Gray background for disabled state */
-    cursor: not-allowed; /* Not-allowed cursor */
+    background-color: #ccc; 
+    cursor: not-allowed; 
   }
   
   .file-uploader button:hover:not(:disabled) {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
   }
-
 
   /* Uploading bar */
   .progress-container {
     width: 100%;
-    height: 20px;
+    height: 5px;
     background-color: #f3f3f3;
     border-radius: 10px;
     overflow: hidden;
@@ -88,8 +87,9 @@
   
   .progress-bar {
     height: 100%;
-    background: blue;
-    width: 0;
+    /* background: linear-gradient(to right, blue, pink);  */
+    background-color:#0056b3;
+    width: 0; 
     transition: width 0.4s ease;
   }
   
@@ -98,4 +98,32 @@
     font-size: 14px;
     margin-top: 5px;
   }
+
+  .message {
+    width: 100%;
+    margin-top: 10px;           
+    padding: 10px;              
+    border-radius: 5px;         
+    font-size: 16px;            
+    font-weight: bold;          
+    text-align: center;         
+}
+
+/* Success message styles */
+.message.success {
+    background-color: #4caf50; /* Green background for success messages */
+    color: white;               
+}
+
+/* Error message styles */
+.message.error {
+    background-color: #f44336; /* Red background for error messages */
+    color: white;               
+}
+
+/* General message styles for both success and error */
+.message.warning {
+    background-color: #ff9800; /* Orange background for warning messages */
+    color: white;               
+}
   

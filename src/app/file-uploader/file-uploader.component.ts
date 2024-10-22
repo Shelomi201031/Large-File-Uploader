@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,6 +16,8 @@ export class FileUploaderComponent {
   uploading: boolean = false; // Flag to track upload status
   progressDecimal: string = '0'; // Progress as a whole number string
   chunkNames: string[] = []; // Array to store chunk names
+  message: { text: string; type: string } | null = null; // Message object with type
+  showUploader: boolean = true; // Flag to control the visibility of the uploader box
 
   constructor(private http: HttpClient) {}
 
@@ -28,12 +30,14 @@ export class FileUploaderComponent {
       this.uploading = false;
       this.progressDecimal = '0'; // Reset decimal progress
       this.chunkNames = []; // Reset chunk names
+      this.message = null; // Reset message
+      this.showUploader = true; // Ensure uploader is visible
     }
   }
 
   uploadFile() {
     if (!this.file) {
-      alert('Please select a file first!');
+      this.message = { text: 'Please select a file first!', type: 'error' }; // Set error message
       return;
     }
 
@@ -80,7 +84,13 @@ export class FileUploaderComponent {
         this.uploadNextChunk(); // Upload the next chunk
       } else {
         this.uploading = false;
-        alert('File uploaded successfully!');
+        this.message = { text: 'File uploaded successfully!', type: 'success' }; // Set success message
+
+        // Hide uploader and reset file input after 5 seconds
+        setTimeout(() => {
+          this.showUploader = false;
+          this.message = null;
+        }, 1000); // Hide after 5 seconds
       }
     }, 500); // Simulate a delay in uploading the chunk
   }
