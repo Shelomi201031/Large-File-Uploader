@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -12,15 +12,15 @@ export class FileUploaderComponent {
   maxChunkSize: number = 50 * 1024 * 1024; // 50 MB chunk size for good network
   minChunkSize: number = 10 * 1024 * 1024; // 10 MB chunk size for poor network
   currentChunk: number = 0;
-  progress: number = 0; // Upload progress percentage as a whole number
+  progress: number = 0; // Upload progress percentage
   uploading: boolean = false; // Flag to track upload status
-  progressDecimal: string = '0'; // Progress as a whole number string
   chunkNames: string[] = []; // Array to store chunk names
   message: { text: string; type: string } | null = null; // Message object with type
-  showUploader: boolean = true; // Flag to control the visibility of the uploader box
+  showUploader: boolean = true; // Flag to control visibility of the uploader box
 
   constructor(private http: HttpClient) {}
 
+  // Handle file selection
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
@@ -28,13 +28,13 @@ export class FileUploaderComponent {
       this.currentChunk = 0;
       this.progress = 0;
       this.uploading = false;
-      this.progressDecimal = '0'; // Reset decimal progress
       this.chunkNames = []; // Reset chunk names
       this.message = null; // Reset message
       this.showUploader = true; // Ensure uploader is visible
     }
   }
 
+  // Upload file
   uploadFile() {
     if (!this.file) {
       this.message = { text: 'Please select a file first!', type: 'error' }; // Set error message
@@ -53,6 +53,7 @@ export class FileUploaderComponent {
     });
   }
 
+  // Upload the next chunk
   private uploadNextChunk() {
     const start = this.currentChunk * this.chunkSize;
     const end = Math.min(start + this.chunkSize, this.file!.size);
@@ -62,10 +63,6 @@ export class FileUploaderComponent {
     const chunkName = `${this.file!.name}.part${this.currentChunk}`;
     this.chunkNames.push(chunkName); // Store the chunk name
 
-    // Log the chunk details (for debugging or visualization)
-    console.log(`Chunk created: ${chunkName}`);
-
-    // Simulate saving the chunk for testing (replace with actual backend save logic)
     const formData = new FormData();
     formData.append('file', chunk, chunkName);
 
@@ -73,11 +70,8 @@ export class FileUploaderComponent {
     setTimeout(() => {
       this.currentChunk++;
 
-      // Update the progress percentage as a whole number
-      this.progress = Math.min(100, Math.floor((end / this.file!.size) * 100)); // Whole number
-
-      // Update the progressDecimal to show the progress
-      this.progressDecimal = this.progress.toString();
+      // Update the progress percentage
+      this.progress = Math.min(100, Math.floor((end / this.file!.size) * 100));
 
       // Check if there are more chunks to upload
       if (start + this.chunkSize < this.file!.size) {
@@ -86,16 +80,32 @@ export class FileUploaderComponent {
         this.uploading = false;
         this.message = { text: 'File uploaded successfully!', type: 'success' }; // Set success message
 
-        // Hide uploader and reset file input after 5 seconds
+        // After showing the success message, reset the uploader after 3 seconds
         setTimeout(() => {
-          this.showUploader = false;
-          this.message = null;
-        }, 1000); // Hide after 5 seconds
+          this.resetUploader();
+        }, 1000); // Wait for 3 seconds before resetting
       }
     }, 500); // Simulate a delay in uploading the chunk
   }
 
-  // Simulate a network speed test
+  // Reset the uploader after successful upload
+  private resetUploader() {
+    this.file = null; // Clear the file
+    this.currentChunk = 0;
+    this.progress = 0;
+    this.chunkNames = [];
+    this.uploading = false;
+    this.message = null;
+    this.showUploader = true;
+
+    // Clear the file input element manually
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; // Reset the file input
+    }
+  }
+
+  // Simulate a network speed test to adjust chunk size
   private async testNetworkSpeed(): Promise<boolean> {
     return new Promise((resolve) => {
       const startTime = Date.now();

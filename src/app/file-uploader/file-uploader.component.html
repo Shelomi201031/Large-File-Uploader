@@ -1,22 +1,21 @@
 <div class="file-uploader">
-    <h2>Upload Your Large Files Here</h2>
-    <input type="file" (change)="onFileSelected($event)" />
-    <button (click)="uploadFile()" [disabled]="!file">Upload</button>
-  
-    <!-- Display the message with styles -->
-    <div *ngIf="message" [ngClass]="['message', message.type]">
-      {{ message.text }}
-    </div> 
+  <h2>Upload Your Large Files Here</h2>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="uploadFile()" [disabled]="!file">Upload</button>
 
-    <!-- Progress bar -->
-    <div *ngIf="uploading">
-      <div class="progress-container">
-        <div class="progress-bar" [style.width]="progress + '%'"></div>
-      </div>
-      <p>{{ progress }}% uploaded</p>
-      <ul>
-        <li *ngFor="let chunkName of chunkNames">{{ chunkName }}</li> <!-- List of chunk names -->
-      </ul>
+  <!-- Display the message with styles -->
+  <div *ngIf="message" [ngClass]="['message', message.type]">
+    {{ message.text }}
+  </div> 
+
+  <!-- Progress bar -->
+  <div *ngIf="uploading">
+    <div class="progress-container">
+      <div class="progress-bar" [style.width]="progress + '%'"></div>
     </div>
+    <p>{{ progress }}% uploaded</p>
+    <ul>
+      <li *ngFor="let chunkName of chunkNames">{{ chunkName }}</li> <!-- List of chunk names -->
+    </ul>
+  </div>
 </div>
-  
