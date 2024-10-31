@@ -1,4 +1,3 @@
-// Angular Component TypeScript
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
